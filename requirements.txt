@@ -1,0 +1,8 @@
+aiohttp==2.3.7
+aiopg==0.13.2
+async-timeout==2.0.0
+chardet==3.0.4
+idna==2.6
+multidict==4.0.0
+psycopg2==2.7.3.2
+yarl==0.17.0
