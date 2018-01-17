@@ -1,0 +1,11 @@
+#wrapper {
+    width: 500px;
+}
+
+
+#subscribe {
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #000;
+    width: 100%;
+}
