@@ -7,9 +7,9 @@ catch (err) {
 
 // show message
 function showMessage(data) {
-    console.log(data);
-    var message = data['message'];
-    var players_num = data['players_num'];
+    var json_obj = $.parseJSON(data);
+    var message = json_obj.message;
+    var players_num = json_obj.players_num;
 
     var messageElem = $('#subscribe'),
         height = 0,
@@ -20,9 +20,8 @@ function showMessage(data) {
         height += parseInt($(this).height());
     });
 
-    $('#chat_info').html(players_num);
-
     messageElem.animate({scrollTop: height});
+    $('#chat_info').html(players_num);
 }
 
 function sendMessage() {
@@ -32,7 +31,8 @@ function sendMessage() {
 }
 
 sock.onopen = function () {
-    showMessage('Connection to server started')
+    msg = JSON.stringify({"message": 'Connection to server started'})
+    showMessage(msg)
 };
 
 // send message from form
@@ -57,9 +57,11 @@ $('#signout').click(function () {
 
 sock.onclose = function (event) {
     if (event.wasClean) {
-        showMessage('Clean connection end')
+        msg = JSON.stringify({"message": 'Clean connection end'});
+        showMessage(msg)
     } else {
-        showMessage('Connection broken')
+        msg = JSON.stringify({"message": 'Connection broken'});
+        showMessage(msg)
     }
 };
 

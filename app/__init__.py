@@ -10,7 +10,7 @@ handler = Handler()
 def init_app(argv):
     app = web.Application()
     app['ws_list'] = []
-    app['players_num'] = 0
+    app['players_num'] = 1
     # app['game'] = Pocker()
 
     aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader('./app/templates/'))

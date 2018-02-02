@@ -1,5 +1,6 @@
 from aiohttp import web, WSMsgType
 import aiohttp_jinja2
+import json
 from . import models
 
 
@@ -17,13 +18,13 @@ class Handler:
         ws = web.WebSocketResponse()
         await ws.prepare(request)
 
+        # players_num = request.app['players_num']
+
         for _ws in request.app['ws_list']:
             request.app['players_num'] = request.app['players_num'] + 1
-            print(request.app['players_num'])
-            message = '%s joined' % 'some_user'
-            players_num = request.app['players_num']
-            json_data = {'message': message, 'players_num': players_num}
-            _ws.send_json(json_data)
+            msg = '%s joined' % 'some_user'
+            json_data = {"message": str(msg), "players_num": request.app['players_num']}
+            await _ws.send_json(json_data, dumps=json.dumps)
         request.app['ws_list'].append(ws)
 
         async for msg in ws:
@@ -34,7 +35,8 @@ class Handler:
 
                 else:
                     for _ws in request.app['ws_list']:
-                        await _ws.send_str(msg.data)
+                        json_data = {"message": str(msg.data), "players_num": request.app['players_num']}
+                        await _ws.send_json(json_data, dumps=json.dumps)
             elif msg.type == WSMsgType.ERROR:
                 print('ws connection closed with exception %s' % ws.exception())
 
@@ -43,5 +45,6 @@ class Handler:
         for _ws in request.app['ws_list']:
             request.app['players_num'] = request.app['players_num'] - 1
             msg = '%s disconnected' % 'some_user'
-            await _ws.send_str(msg)
+            json_data = {"message": str(msg), "players_num": request.app['players_num']}
+            await _ws.send_json(json_data, dumps=json.dumps)
         return ws
