@@ -6,25 +6,32 @@
     <link rel="stylesheet" type="text/css" href="{{ app.router.static.url(filename='css/style.css') }}">
 </head>
 <body>
-<h1>{{text}}</h1>
-<p>{{text}}</p>
+<h1>{{ text }}</h1>
+<p>{{ text }}</p>
 <div id="wrapper">
-    <form>
-        <div id="subscribe"></div>
-        <textarea id="message" name="message" cols="40" rows="3"></textarea>
-        <input id="submit" type="button" value="Отправить">
-    </form>
+    <div id="game">
+
+    </div>
+    <div id="chat">
+        <form>
+            <div id="subscribe">
+            </div>
+            <div id="chat_info">
+            </div>
+            <div id="message">
+                <label>Сообщение <textarea id="message" name="message" cols="40" rows="2"></textarea></label>
+                <input id="submit" type="button" value="Отправить">
+            </div>
+        </form>
+    </div>
 </div>
+
 
 <script
         src="http://code.jquery.com/jquery-2.2.4.min.js"
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous">
 </script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js.map"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.slim.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.slim.js.map"></script>-->
 <script src="{{ app.router.static.url(filename='js/main.js') }}"></script>
 </body>
 </html>

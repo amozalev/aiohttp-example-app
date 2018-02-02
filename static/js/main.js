@@ -1,23 +1,26 @@
 try {
     var sock = new WebSocket('ws://' + window.location.host + '/ws');
-    // console.log('ws://' + window.location.host + '/ws');
 }
 catch (err) {
-    // console.log('websocket error:', err);
     var sock = new WebSocket('wss://' + window.location.host + '/ws');
 }
 
-// show message in div#subscribe
-function showMessage(message) {
+// show message
+function showMessage(data) {
+    console.log(data);
+    var message = data['message'];
+    var players_num = data['players_num'];
+
     var messageElem = $('#subscribe'),
         height = 0,
         date = new Date();
-    console.log(messageElem);
     options = {hour12: false};
     messageElem.append($('<p>').html('[' + date.toLocaleTimeString('en-US', options) + '] ' + message + '\n'));
     messageElem.find('p').each(function (i, value) {
         height += parseInt($(this).height());
     });
+
+    $('#chat_info').html(players_num);
 
     messageElem.animate({scrollTop: height});
 }
@@ -46,7 +49,6 @@ $('#message').keyup(function (e) {
 // income message handler
 sock.onmessage = function (event) {
     showMessage(event.data);
-    console.log(event.data)
 };
 
 $('#signout').click(function () {
